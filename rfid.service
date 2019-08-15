@@ -1,0 +1,11 @@
+[Unit]
+Description=RFID Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/rfid/venv/bin/python3 /home/pi/rfid/rfid_reader.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
