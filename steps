@@ -1,44 +1,19 @@
-virtualenv
-python3
-ipython3
+runs with python 3.
 
-evdev
+$ pip install -r requirements.txt
 
-git
+put the service description in /etc/systemd/system
+reload the daemons
+
+$ systemctl daemon-reload
+$ systemctl start rfid_reader.py
+
+Plug a USB keyboard style reader in, such as:
+kkmoon contactless 14443a 13.56 MHz reader
+
+With the service running, a scanned RFID shoiuld be logged to FILENAME in the rfid_reader.py file.
+
+Alternitively, skip the service and just run the script
+$ python rfid_reader.py
 
 
-dev.path: /dev/input/event0 
-dev.name: Barcode Reader  
-dev.phys: usb-3f980000.usb-1.2/input0
-
-use udev to always map phys to path
-
-i guess a python daemon which is constantly checking can do it.
-
-Permission model:
-totally arbitrary.
-
-[User][Permission][Grant]
-rando, gate, open
-
-python keyboard library
-python3-dev
-
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python3 get-pip.py --user
-adding /home/pi/.local/bin to PATH
-export PATH=$PATH:$HOME/.local/bin
-pip install virtualenv --user
-cd $proj
-virtualenv venv
-. venv/bin/activate
-
-pip install keyboard
-pip install ipyhton
-
-as root because permissions (probably can handle as just input group)
-
-events = keboard.record(until="\n")
-rfid = "".join(k.name for k in events if k.name != "enter")
-
-now check rfid against database or WHATEVER
